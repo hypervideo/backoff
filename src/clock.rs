@@ -1,4 +1,7 @@
-use instant::Instant;
+#[cfg(not(target_family = "wasm"))]
+use std::time::Instant;
+#[cfg(target_family = "wasm")]
+use web_time::Instant;
 
 /// Clock returns the current time.
 pub trait Clock {

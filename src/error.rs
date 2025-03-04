@@ -1,7 +1,10 @@
 use std::error;
 use std::fmt;
 
-use instant::Duration;
+#[cfg(not(target_family = "wasm"))]
+use std::time::Duration;
+#[cfg(target_family = "wasm")]
+use web_time::Duration;
 
 /// Error is the error value in an operation's
 /// result.
@@ -122,9 +125,7 @@ where
 {
     fn eq(&self, other: &Self) -> bool {
         match (self, other) {
-            (Error::Permanent(ref self_err), Error::Permanent(ref other_err)) => {
-                self_err == other_err
-            }
+            (Error::Permanent(self_err), Error::Permanent(other_err)) => self_err == other_err,
             (
                 Error::Transient {
                     err: self_err,

@@ -1,6 +1,9 @@
-use instant::Instant;
 use std::marker::PhantomData;
 use std::time::Duration;
+#[cfg(not(target_family = "wasm"))]
+use std::time::Instant;
+#[cfg(target_family = "wasm")]
+use web_time::Instant;
 
 use crate::backoff::Backoff;
 use crate::clock::Clock;
