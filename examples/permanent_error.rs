@@ -21,7 +21,7 @@ mod example {
     use std::io::{self, Read};
 
     fn new_io_err<E: Display>(err: E) -> io::Error {
-        io::Error::new(io::ErrorKind::Other, err.to_string())
+        io::Error::other(err.to_string())
     }
 
     pub fn run(url: &str) -> Result<String, Error<io::Error>> {

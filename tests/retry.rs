@@ -16,7 +16,7 @@ fn retry() {
             }
 
             Err(Error::Transient {
-                err: io::Error::new(io::ErrorKind::Other, "err"),
+                err: io::Error::other("err"),
                 retry_after: None,
             })
         };
@@ -30,12 +30,7 @@ fn retry() {
 
 #[test]
 fn permanent_error_immediately_returned() {
-    let f = || -> Result<(), Error<io::Error>> {
-        Err(Error::Permanent(io::Error::new(
-            io::ErrorKind::Other,
-            "err",
-        )))
-    };
+    let f = || -> Result<(), Error<io::Error>> { Err(Error::Permanent(io::Error::other("err"))) };
 
     let backoff = ExponentialBackoff::default();
     match maybe_backoff::retry(backoff, f).err().unwrap() {

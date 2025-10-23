@@ -11,3 +11,6 @@ lint:
     cargo clippy --lib --target wasm32-unknown-unknown -- -D warnings
 
 check: lint test
+
+fmt:
+    cargo fmt
