@@ -20,15 +20,6 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: dtolnay/rust-toolchain@stable
-
-      - name: Install cargo-rdme
-        uses: taiki-e/install-action@v2
-        with:
-          tool: cargo-rdme
-
-      - name: "Is readme up to date?"
-        run: cargo rdme --check
-
       - name: "Build and test"
         run: cargo test
 

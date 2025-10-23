@@ -1,7 +1,24 @@
 [package]
 name = "maybe-backoff"
 version = "0.5.0"
-authors = ["Tibor Benke <ihrwein@gmail.com>", "Robert Krahn <robert@hyper.video>"]
+authors = [
+  "Tibor Benke <ihrwein@gmail.com>",
+  "Aleksey Kuznetsov <zummenix@gmail.com>",
+  "Andrew Banchich <13824577+andrewbanchich@users.noreply.github.com>",
+  "Anthony Dodd <dodd.anthonyjosiah@gmail.com>",
+  "Armin Ronacher <armin.ronacher@active-4.com>",
+  "clux <sszynrae@gmail.com>",
+  "Daniel Cormier <dcormier@users.noreply.github.com>",
+  "Jakub Panek <me@panekj.dev>",
+  "Jonas Platte <jplatte+git@posteo.de>",
+  "Noah <33094578+coolreader18@users.noreply.github.com>",
+  "Shekhinah Memmel <she@khinah.xyz>",
+  "Stas <iamlolylol@gmail.com>",
+  "Stepan Artamonov <stiartamonov@gmail.com>",
+  "Teo Klestrup Röijezon <teo@nullable.se>",
+  "tyranron <tyranron@gmail.com>",
+  "Robert Krahn <robert@hyper.video>",
+]
 categories = ["network-programming"]
 documentation = "https://docs.rs/maybe-backoff"
 edition = "2021"
