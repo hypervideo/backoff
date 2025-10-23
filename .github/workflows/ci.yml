@@ -54,14 +54,17 @@ jobs:
         uses: dtolnay/rust-toolchain@stable
         with:
           components: clippy
+          targets: wasm32-unknown-unknown
 
       - name: Cache cargo build artifacts
         uses: Swatinem/rust-cache@v2
 
       - name: Run cargo clippy
-        run: cargo clippy --all-targets -- -D warnings
+        run: |
+          cargo clippy --all-targets --features tokio -- -D warnings
+          cargo clippy --all-targets --target wasm32-unknown-unknown -- -D warnings
 
       - name: Run cargo test
         run: |
-          cargo test
+          cargo test --features tokio
           cargo test --docs

@@ -222,10 +222,12 @@ pub mod exponential;
 #[cfg_attr(docsrs, doc(cfg(feature = "futures")))]
 pub mod future;
 
+mod maybe_backoff;
 mod retry;
 
 pub use crate::clock::{Clock, SystemClock};
 pub use crate::error::Error;
+pub use crate::maybe_backoff::MaybeBackoff;
 pub use crate::retry::{retry, retry_notify, Notify};
 
 /// Exponential backoff policy with system's clock.
