@@ -15,6 +15,7 @@
               cargo
               clippy
               pkg-config
+              lld  # LLVM linker needed for WASM
             ];
 
             buildInputs = with pkgs; [

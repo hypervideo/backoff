@@ -10,7 +10,7 @@ use crate::error::Error;
 /// # Examples
 ///
 /// ```rust
-/// # use backoff::{ExponentialBackoff, Error, retry};
+/// # use maybe_backoff::{ExponentialBackoff, Error, retry};
 /// let f = || -> Result<(), Error<&str>> {
 ///     // Business logic...
 ///     // Give up.
@@ -41,8 +41,8 @@ where
 /// # Examples
 ///
 /// ```rust
-/// # use backoff::{Error, retry_notify};
-/// # use backoff::backoff::Stop;
+/// # use maybe_backoff::{Error, retry_notify};
+/// # use maybe_backoff::backoff::Stop;
 /// # use std::time::Duration;
 /// let notify = |err, dur| { println!("Error happened at {:?}: {}", dur, err); };
 /// let f = || -> Result<(), Error<&str>> {

@@ -1,8 +1,8 @@
-extern crate backoff;
+#![allow(clippy::field_reassign_with_default)]
 
-use backoff::backoff::Backoff;
-use backoff::exponential::ExponentialBackoff;
-use backoff::{Clock, SystemClock};
+use maybe_backoff::backoff::Backoff;
+use maybe_backoff::exponential::ExponentialBackoff;
+use maybe_backoff::{Clock, SystemClock};
 
 use std::cell::RefCell;
 use std::time::Duration;
@@ -20,7 +20,7 @@ struct TestClock(RefCell<Inner>);
 
 impl TestClock {
     fn new(i: Duration, start: Instant) -> TestClock {
-        TestClock(RefCell::new(Inner { i: i, start: start }))
+        TestClock(RefCell::new(Inner { i, start }))
     }
 }
 

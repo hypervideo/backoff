@@ -26,15 +26,15 @@ pub trait Sleeper {
 /// # Example
 ///
 /// ```rust
-/// use backoff::ExponentialBackoff;
+/// use maybe_backoff::ExponentialBackoff;
 ///
-/// async fn f() -> Result<(), backoff::Error<&'static str>> {
+/// async fn f() -> Result<(), maybe_backoff::Error<&'static str>> {
 ///     // Business logic...
-///     Err(backoff::Error::Permanent("error"))
+///     Err(maybe_backoff::Error::Permanent("error"))
 /// }
 ///
 /// # async fn go() {
-/// backoff::future::retry(ExponentialBackoff::default(), f).await.err().unwrap();
+/// maybe_backoff::future::retry(ExponentialBackoff::default(), f).await.err().unwrap();
 /// # }
 /// # fn main() { futures_executor::block_on(go()); }
 /// ```
@@ -71,15 +71,15 @@ where
 /// # Example
 ///
 /// ```rust
-/// use backoff::backoff::Stop;
+/// use maybe_backoff::backoff::Stop;
 ///
-/// async fn f() -> Result<(), backoff::Error<&'static str>> {
+/// async fn f() -> Result<(), maybe_backoff::Error<&'static str>> {
 ///     // Business logic...
-///     Err(backoff::Error::transient("error"))
+///     Err(maybe_backoff::Error::transient("error"))
 /// }
 ///
 /// # async fn go() {
-/// let err = backoff::future::retry_notify(Stop {}, f, |e, dur| {
+/// let err = maybe_backoff::future::retry_notify(Stop {}, f, |e, dur| {
 ///     println!("Error happened at {:?}: {}", dur, e)
 /// })
 /// .await
@@ -214,7 +214,6 @@ fn rt_sleeper() -> impl Sleeper {
 
 #[cfg(feature = "tokio")]
 #[cfg_attr(docsrs, doc(cfg(feature = "tokio")))]
-
 struct TokioSleeper;
 #[cfg(feature = "tokio")]
 #[cfg_attr(docsrs, doc(cfg(feature = "tokio")))]
