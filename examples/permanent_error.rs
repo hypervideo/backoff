@@ -1,4 +1,4 @@
-use backoff::{Error, ExponentialBackoff};
+use maybe_backoff::{Error, ExponentialBackoff};
 use reqwest::Url;
 
 use std::fmt::Display;
@@ -28,7 +28,7 @@ fn fetch_url(url: &str) -> Result<String, Error<io::Error>> {
     };
 
     let backoff = ExponentialBackoff::default();
-    backoff::retry(backoff, op)
+    maybe_backoff::retry(backoff, op)
 }
 
 fn main() {

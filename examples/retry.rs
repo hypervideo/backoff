@@ -1,4 +1,4 @@
-use backoff::{retry, Error, ExponentialBackoff};
+use maybe_backoff::{retry, Error, ExponentialBackoff};
 
 use std::io::Read;
 

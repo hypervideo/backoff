@@ -1,53 +1,42 @@
 [package]
-name          = "backoff"
-version       = "0.4.1"
-edition       = "2021"
-authors       = ["Tibor Benke <ihrwein@gmail.com>"]
-license       = "MIT/Apache-2.0"
-readme        = "README.md"
-repository    = "https://github.com/ihrwein/backoff"
-homepage      = "https://github.com/ihrwein/backoff"
-documentation = "https://docs.rs/backoff"
-categories    = ["network-programming"]
-description   = "Retry operations with exponential backoff policy."
-
-[badges]
-travis-ci = { repository = "ihrwein/backoff" }
+name = "maybe-backoff"
+version = "0.5.0"
+authors = ["Tibor Benke <ihrwein@gmail.com>", "Robert Krahn <robert@hyper.video>"]
+categories = ["network-programming"]
+documentation = "https://docs.rs/maybe-backoff"
+edition = "2021"
+homepage = "https://github.com/hypervideo/backoff"
+license = "MIT/Apache-2.0"
+readme = "README.md"
+repository = "https://github.com/hypervideo/backoff"
+description = "Retry operations with exponential backoff policy."
 
 [dependencies]
 async_std_1 = { package = "async-std", version = "1.9", optional = true }
 futures-core = { version = "0.3.8", default-features = false, optional = true }
+getrandom = { version = "0.3" }
 pin-project-lite = { version = "0.2.7", optional = true }
 rand = { version = "0.9" }
-getrandom = { version = "0.3" }
-tokio_1 = { package = "tokio", version = "1.0", features = [
-  "time",
-], optional = true }
+tokio_1 = { package = "tokio", version = "1.0", features = ["time"], optional = true }
 
 [target.'cfg(target_family = "wasm")'.dependencies]
-web-time  = { version = "1.1.0" }
+web-time = { version = "1.1.0" }
 getrandom = { version = "0.3", features = ["wasm_js"] }
 
 [dev-dependencies]
-async_std_1 = { package = "async-std", version = "1.6", features = [
-  "attributes",
-] }
-reqwest = { version = "0.12", features = ["json", "blocking"] }
-tokio_1 = { package = "tokio", version = "1.0", features = [
-  "macros",
-  "time",
-  "rt-multi-thread",
-] }
+async_std_1 = { package = "async-std", version = "1.6", features = ["attributes"] }
 futures-executor = { version = "0.3" }
+reqwest = { version = "0.12", features = ["json", "blocking"] }
+tokio_1 = { package = "tokio", version = "1.0", features = ["macros", "time", "rt-multi-thread"] }
 
 [features]
-default   = []
-futures   = ["futures-core", "pin-project-lite"]
-tokio     = ["futures", "tokio_1"]
+default = []
+futures = ["futures-core", "pin-project-lite"]
+tokio = ["futures", "tokio_1"]
 async-std = ["futures", "async_std_1"]
 
 [[example]]
-name              = "async"
+name = "async"
 required-features = ["tokio"]
 
 [[example]]
@@ -57,5 +46,5 @@ name = "permanent_error"
 name = "retry"
 
 [package.metadata.docs.rs]
-features     = ["tokio"]
+features = ["tokio"]
 rustdoc-args = ["--cfg", "docsrs"]

@@ -61,7 +61,7 @@
 //! `examples/permanent_error.rs`:
 //!
 //! ```rust,no_run
-//! use backoff::{Error, ExponentialBackoff};
+//! use maybe_backoff::{Error, ExponentialBackoff};
 //! use reqwest::Url;
 //!
 //! use std::fmt::Display;
@@ -82,7 +82,7 @@
 //!         let mut resp = reqwest::blocking::get(url)
 //!             // Transient errors can be constructed with the ? operator
 //!             // or with the try! macro. No explicit conversion needed
-//!             // from E: Error to backoff::Error;
+//!             // from E: Error to maybe_backoff::Error;
 //!             .map_err(new_io_err)?;
 //!
 //!         let mut content = String::new();
@@ -91,7 +91,7 @@
 //!     };
 //!
 //!     let backoff = ExponentialBackoff::default();
-//!     backoff::retry(backoff, op)
+//!     maybe_backoff::retry(backoff, op)
 //! }
 //!
 //! fn main() {
@@ -113,7 +113,7 @@
 //! `examples/retry.rs`:
 //!
 //! ```rust
-//! use backoff::{retry, Error, ExponentialBackoff};
+//! use maybe_backoff::{retry, Error, ExponentialBackoff};
 //!
 //! use std::io::Read;
 //!
@@ -176,10 +176,10 @@
 //! Please set either the `tokio` or `async-std` features in Cargo.toml to enable the async support of this library, i.e.:
 //!
 //! ```toml
-//! backoff = { version = "x.y.z", features = ["tokio"] }
+//! myabe-backoff = { version = "x.y.z", features = ["tokio"] }
 //! ```
 //!
-//! A `Future<Output = Result<T, backoff::Error<E>>` can be easily retried:
+//! A `Future<Output = Result<T, maybe_backoff::Error<E>>` can be easily retried:
 //!
 //! `examples/async.rs`:
 //!
@@ -187,10 +187,10 @@
 //!
 //! extern crate tokio_1 as tokio;
 //!
-//! use backoff::ExponentialBackoff;
+//! use maybe_backoff::ExponentialBackoff;
 //!
 //! async fn fetch_url(url: &str) -> Result<String, reqwest::Error> {
-//!     backoff::future::retry(ExponentialBackoff::default(), || async {
+//!     maybe_backoff::future::retry(ExponentialBackoff::default(), || async {
 //!         println!("Fetching {}", url);
 //!         Ok(reqwest::get(url).await?.text().await?)
 //!     })
