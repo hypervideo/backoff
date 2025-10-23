@@ -1,6 +1,41 @@
 use crate::{backoff::Backoff as _, ExponentialBackoff, ExponentialBackoffBuilder};
 use std::time::Duration;
 
+/// `MaybeBackoff` provides a simplified way to manage an optional exponential backoff while giving control over when to wait.
+///
+/// # Example
+/// ```rust,no_run,ignore
+/// let mut backoff = MaybeBackoff::default();
+///
+/// // Loop that runs fallible operation that should be retried with backoff.
+/// loop {
+///     backoff.sleep().await; // Does nothing when not armed (disarmed by default).
+///     backoff.arm();
+///
+///     while let Some(event) = event_source.next().await {
+///         match event {
+///             Ok(Event::Open) => debug!("Connected!"),
+///             Ok(Event::Message(event)) => match parse(event) {
+///                 Ok(data) => {
+///                     backoff.disarm();
+///                     forward_data(data).await;
+///                     break;
+///                 }
+///                 Err(error) => {
+///                     error!("Parsing failed: {error:?}");
+///                     event_source.close();
+///                     continue;
+///                 }
+///             },
+///             Err(error) => {
+///                 error!("Event source failed: {error:?}");
+///                 event_source.close();
+///                 continue;
+///             }
+///         }
+///     }
+/// }
+/// ```
 #[derive(Default)]
 pub struct MaybeBackoff {
     backoff: Option<ExponentialBackoff>,

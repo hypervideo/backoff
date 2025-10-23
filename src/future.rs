@@ -214,7 +214,6 @@ fn rt_sleeper() -> impl Sleeper {
 
 #[cfg(feature = "tokio")]
 #[cfg_attr(docsrs, doc(cfg(feature = "tokio")))]
-
 struct TokioSleeper;
 #[cfg(feature = "tokio")]
 #[cfg_attr(docsrs, doc(cfg(feature = "tokio")))]

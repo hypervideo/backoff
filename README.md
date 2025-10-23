@@ -1,6 +1,8 @@
-# backoff
+# maybe-backoff
 
-Exponential backoff and retry.
+Exponential backoff and retry. This is a fork of [backoff](https://github.com/ihrwein/backoff). The parent repo has been unmaintained for a while and this version provides up-to-date dependencies and a `MaybeBackoff` interface that streamlines conditional backoff usage.
+
+---
 
 Inspired by the retry mechanism in Google's [google-http-java-client](https://github.com/google/google-http-java-client) library and
 its [Golang port](https://github.com/cenkalti/backoff).
