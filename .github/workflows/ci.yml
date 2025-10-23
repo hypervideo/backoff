@@ -1,0 +1,67 @@
+name: CI
+
+on:
+  push:
+    branches: ['master']
+  pull_request:
+    branches: ['**']
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  audit:
+    name: Audit
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: cargo-audit cache restore
+        id: cargo-audit_cache_restore
+        uses: actions/cache/restore@v4
+        with:
+          path: ~/.cargo/bin/cargo-audit
+          key: ${{ runner.os }}-cargo-audit
+
+      - run: cargo install cargo-audit
+        if: steps.cargo-audit_cache_restore.outputs.cache-hit != 'true'
+
+      - name: cargo-audit cache save
+        id: cargo-audit_cache_save
+        uses: actions/cache/save@v4
+        if: always() && steps.cargo-audit_cache_restore.outputs.cache-hit != 'true'
+        with:
+          path: ~/.cargo/bin/cargo-audit
+          key: ${{ runner.os }}-cargo-audit
+
+      - uses: rustsec/audit-check@v2
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+  lint-and-test:
+    name: Lint and Test
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install Rust toolchain
+        uses: dtolnay/rust-toolchain@stable
+        with:
+          components: clippy
+
+      - name: Cache cargo build artifacts
+        uses: Swatinem/rust-cache@v2
+
+      - name: Run cargo clippy
+        run: cargo clippy --all-targets -- -D warnings
+
+      - name: Run cargo test
+        run: |
+          cargo test
+          cargo test --docs
