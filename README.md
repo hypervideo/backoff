@@ -7,9 +7,9 @@ Exponential backoff and retry. This is a fork of [backoff](https://github.com/ih
 Inspired by the retry mechanism in Google's [google-http-java-client](https://github.com/google/google-http-java-client) library and
 its [Golang port](https://github.com/cenkalti/backoff).
 
-[![Build Status](https://travis-ci.org/ihrwein/backoff.svg?branch=master)](https://travis-ci.org/ihrwein/backoff)
-[![crates.io](http://meritbadge.herokuapp.com/backoff)](https://crates.io/crates/backoff)
-[![Documentation](https://docs.rs/backoff/badge.svg)](https://docs.rs/backoff)
+[![CI](https://github.com/hypervideo/backoff/actions/workflows/ci.yml/badge.svg)](https://github.com/hypervideo/backoff/actions/workflows/ci.yml)
+[![Crates.io](https://img.shields.io/crates/v/maybe-backoff)](https://crates.io/crates/maybe-backoff)
+[![Documentation](https://docs.rs/maybe-backoff/badge.svg)](https://docs.rs/maybe-backoff)
 
 Compile with feature `wasm-bindgen` or `stdweb` for use in WASM environments. `retry_notify` is not yet supported, as it uses `std::thread::sleep`.
 
@@ -55,42 +55,6 @@ async fn fetch_url(url: &str) -> Result<String, reqwest::Error> {
     .await
 }
 ```
-
-## Breaking changes
-
-### 0.3.x -> 0.4.x
-
-#### Adding new field to Error::Transient
-
-`Transient` errors got a second field. Useful for handling ratelimits like a HTTP 429 response.
-
-To fix broken code, just replace calls of `Error::Transient()` with `Error::transient()`.
-
-### 0.2.x -> 0.3.x
-
-#### Removal of Operation trait
-
-https://github.com/ihrwein/backoff/pull/28
-
-The `Operation` trait has been removed, please use normal closures implementing `FnMut` instead. The `retry` and `retry_notify` methods were converted to free functions, available in the crate's root.
-
-[Example](examples/retry.rs).
-
-#### Removal of FutureOperation trait
-
-https://github.com/ihrwein/backoff/pull/28
-
-The `FutureOperation` trait has been removed. The `retry` and `retry_notify` methods were converted to free functions, available in the crate's root.
-
-[Example](examples/async.rs).
-
-#### Changes in feature flags
-
-- `stdweb` flag was removed, as the project is abandoned.
-
-#### `retry`, `retry_notify` taking ownership of Backoff instances (previously &mut)
-
-[Example](examples/retry.rs).
 
 ## License
 
