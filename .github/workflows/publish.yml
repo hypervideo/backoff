@@ -18,7 +18,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6.0.2
       - uses: dtolnay/rust-toolchain@stable
       - name: "Build and test"
         run: cargo test
@@ -31,12 +31,12 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 25
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6.0.2
       - uses: dtolnay/rust-toolchain@stable
 
       - name: cargo-release cache restore
         id: cargo_release_cache_restore
-        uses: actions/cache/restore@v4
+        uses: actions/cache/restore@v5.0.5
         with:
           path: ~/.cargo/bin/cargo-release
           key: ${{ runner.os }}-cargo-release
@@ -46,7 +46,7 @@ jobs:
 
       - name: cargo-release cache save
         id: cargo_release_cache_save
-        uses: actions/cache/save@v4
+        uses: actions/cache/save@v5.0.5
         if: always() && steps.cargo_release_cache_restore.outputs.cache-hit != 'true'
         with:
           path: ~/.cargo/bin/cargo-release
