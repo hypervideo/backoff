@@ -42,6 +42,10 @@ pub struct MaybeBackoff {
 }
 
 impl MaybeBackoff {
+    /// Starts the backoff unless it is already armed. An armed `MaybeBackoff`
+    /// always waits and never runs out: unlike the `ExponentialBackoff`
+    /// default, it has no 15-minute limit, so loops that retry forever keep
+    /// waiting between attempts.
     pub fn arm(&mut self) {
         if self.backoff.is_none() {
             self.backoff = Some(
@@ -50,6 +54,7 @@ impl MaybeBackoff {
                     .with_max_interval(Duration::from_secs(3))
                     .with_multiplier(1.5)
                     .with_randomization_factor(0.2)
+                    .with_max_elapsed_time(None)
                     .build(),
             )
         }
@@ -69,5 +74,20 @@ impl MaybeBackoff {
             gloo::timers::future::TimeoutFuture::new(duration.as_millis().try_into().unwrap())
                 .await;
         }
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn armed_backoff_keeps_waiting_after_fifteen_minutes() {
+        let mut maybe_backoff = MaybeBackoff::default();
+        maybe_backoff.arm();
+        let backoff = maybe_backoff.backoff.as_mut().unwrap();
+        // `ExponentialBackoff` stops returning delays after 15 minutes by default.
+        backoff.start_time -= Duration::from_secs(16 * 60);
+        assert!(backoff.next_backoff().is_some());
     }
 }

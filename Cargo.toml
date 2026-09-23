@@ -1,6 +1,6 @@
 [package]
 name = "maybe-backoff"
-version = "0.5.0"
+version = "0.5.1"
 authors = [
   "Tibor Benke <ihrwein@gmail.com>",
   "Aleksey Kuznetsov <zummenix@gmail.com>",
