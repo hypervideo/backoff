@@ -94,11 +94,9 @@
 //!     maybe_backoff::retry(backoff, op)
 //! }
 //!
-//! fn main() {
-//!     match fetch_url("https::///wrong URL") {
-//!         Ok(_) => println!("Successfully fetched"),
-//!         Err(err) => panic!("Failed to fetch: {}", err),
-//!     }
+//! match fetch_url("https::///wrong URL") {
+//!     Ok(_) => println!("Successfully fetched"),
+//!     Err(err) => panic!("Failed to fetch: {}", err),
 //! }
 //! ```
 //!
@@ -112,7 +110,7 @@
 //!
 //! `examples/retry.rs`:
 //!
-//! ```rust
+//! ```rust,no_run
 //! use maybe_backoff::{retry, Error, ExponentialBackoff};
 //!
 //! use std::io::Read;
@@ -131,11 +129,9 @@
 //!     retry(backoff, op)
 //! }
 //!
-//! fn main() {
-//!     match fetch_url("https://www.rust-lang.org") {
-//!         Ok(_) => println!("Sucessfully fetched"),
-//!         Err(err) => panic!("Failed to fetch: {}", err),
-//!     }
+//! match fetch_url("https://www.rust-lang.org") {
+//!     Ok(_) => println!("Sucessfully fetched"),
+//!     Err(err) => panic!("Failed to fetch: {}", err),
 //! }
 //! ```
 //!
