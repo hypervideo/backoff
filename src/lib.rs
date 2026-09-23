@@ -110,7 +110,7 @@
 //!
 //! `examples/retry.rs`:
 //!
-//! ```rust
+//! ```rust,no_run
 //! use maybe_backoff::{retry, Error, ExponentialBackoff};
 //!
 //! use std::io::Read;
